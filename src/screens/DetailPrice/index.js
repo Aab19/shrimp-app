@@ -31,7 +31,7 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
           <View
             className={`flex-row items-center ${
               item.creator.buyer == null ? 'bg-[#E5E5E5]' : 'bg-[#FFF8E7]'
-            }  rounded-[28px] px-1 h-[22px]`}>
+            }  rounded-[28px] p-1 pr-3 h-[22px]`}>
             {item.creator.buyer != null && <IconStar />}
             <TextView
               content={`${
@@ -39,7 +39,7 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
                   ? 'Belum terverifikasi'
                   : 'Terverifikasi'
               } `}
-              customClass="ml-1 text-[12px] h-[16px] leading-[16px]"
+              customClass="ml-1 text-[12px] h-[16px] leading-4"
             />
           </View>
         </View>
@@ -57,45 +57,46 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
           <View className="ml-2">
             <TextView
               content="Supplier"
-              customClass="text-[12px] text-[#A09E9E]"
+              customClass="text-[12px] text-[#A09E9E] leading-4 tracking-[0.3px]"
             />
             <TextView
               content={item.creator.name}
-              customClass="mt-[2px]"
+              customClass="leading-5 tracking-[0.5px]"
               customStyle={gstyles.typefaceBold}
             />
           </View>
         </View>
-        <View className="flex flex-row items-center justify-between mt-2">
+        <View className="flex flex-row items-center justify-between mt-[6px]">
           <View className="w-[70%]">
             <TextView
               content="Kontak"
-              customClass="text-[12px] text-[#A09E9E]"
+              customClass="text-[12px] text-[#A09E9E] leading-4"
             />
             <TextView
               content={item.contact}
-              customClass="mt-[2px] text-[16px] mr-6"
+              customClass="text-[16px] leading-6 mr-3 tracking-[0.5px]"
               customStyle={gstyles.typefaceBold}
               ellipsis="tail"
               lines={1}
             />
           </View>
           <CustomButton
-            containerClass="w-[30%]"
+            containerClass="px-4 py-[6px]"
+            customClass='leading-5 tracking-[0.5px]'
             text="Hubungi"
             onPress={() => Linking.openURL(`tel:${item.creator.phone}`)}
           />
         </View>
-        <View className="mt-4">
+        <View className="mt-5">
           <TextView
             content="Daftar Harga"
-            customClass="text-[16px]"
+            customClass="text-[16px] leading-6 tracking-[0.5px]"
             customStyle={gstyles.typefaceBold}
           />
           <FlatList
             data={sizeList}
             initialNumToRender={sizeList.length}
-            className=""
+            className="mt-3"
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderListPrice}
             showsVerticalScrollIndicator={false}
@@ -104,13 +105,12 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
         <View className="mt-4">
           <TextView
             content="Catatan"
-            customClass="text-[16px]"
+            customClass="text-[16px] leading-6 tracking-[0.5px]"
             customStyle={[gstyles.primaryText, gstyles.typefaceBold]}
           />
           <TextView
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam"
-            customClass="mt-1"
-            customStyle={gstyles.primaryText}
+            content={item.remark ? item.remark : '-'}
+            customClass="mt-1 leading-5"
           />
         </View>
       </Fragment>
@@ -119,14 +119,14 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
 
   const renderListPrice = ({item, index}) => {
     return (
-      <View className="flex-row">
+      <View className={`flex-row items-center ${index !== 0 && 'mt-3'}`}>
         <TextView
           content={`Size ${item}`}
-          customClass="text-[16px] mt-3 w-[20%]"
+          customClass="text-[16px] basis-1/4 leading-5"
         />
         <TextView
           content={`Rp ${toCurrencyFormat(detail[`size_${item}`])}`}
-          customClass="text-[16px] mt-3 w-[80%] ml-4"
+          customClass="text-[16px] basis-3/4 leading-5 ml-1"
         />
       </View>
     )
@@ -152,7 +152,7 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-[#F1F5F9]">
       <Navbar
         back
         share
@@ -162,23 +162,22 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
       />
       {detail && (
         <Fragment>
-          <View className="p-3">
+          <View className="p-3 bg-white">
             <TextView
               content={formatText(detail.region.province_name)}
-              customClass="text-[16px]"
+              customClass="text-[16px] leading-6 tracking-[0.5px]"
               customStyle={gstyles.typefaceBold}
             />
             <TextView
               content={formatText(detail.region.name)}
-              customClass="text-[16px] text-[#737373] mt-1"
+              customClass="text-[16px] text-[#737373] leading-6 tracking-[0.5px]"
               customStyle={gstyles.typefaceBold}
             />
           </View>
-          <View className="h-[4px] bg-[#F6F6F6] w-full"></View>
           <FlatList
             data={[detail]}
-            className="p-4"
-            contentContainerStyle={{paddingBottom: 40}}
+            className="px-4 py-2 bg-white mt-1 h-full"
+            contentContainerStyle={{paddingBottom: 24}}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderDetail}
             showsVerticalScrollIndicator={false}

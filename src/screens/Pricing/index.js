@@ -101,6 +101,7 @@ const Pricing = ({status, navigate}) => {
     return (
       <CardPrice
         key={index}
+        idx={index}
         data={item}
         size={sizeValue}
         navigate={navigate}
@@ -116,13 +117,14 @@ const Pricing = ({status, navigate}) => {
   const renderSizeList = ({item, index}) => {
     return (
       <TouchableOpacity
+      className="px-4 py-3"
         onPress={() => {
           setSizeValue(item)
           setBottomSheetSizeFilter(false)
         }}>
         <TextView
           content={item}
-          customClass={`${index == 0 ? 'mt-0' : 'mt-6'}`}
+          customClass='leading-5'
         />
       </TouchableOpacity>
     )
@@ -131,12 +133,12 @@ const Pricing = ({status, navigate}) => {
   const renderLocationList = ({item, index}) => {
     return (
       <TouchableOpacity
+        className="px-4 py-3 leading-5"
         onPress={() => {
           onSelectedLocation(item)
         }}>
         <TextView
           content={formatText(item.full_name)}
-          customClass={`${index == 0 ? 'mt-0' : 'mt-6'}`}
         />
       </TouchableOpacity>
     )
@@ -213,12 +215,13 @@ const Pricing = ({status, navigate}) => {
           <View className="flex-row justify-between items-center p-4">
             <TextView
               content="Size"
-              customClass="text-[16px]"
+              customClass="text-[16px] leading-6 tracking-[0.5px]"
               customStyle={gstyles.typefaceBold}
             />
             <TouchableOpacity onPress={() => setBottomSheetSizeFilter(false)}>
               <TextView
                 content="Tutup"
+                className="leading-5 tracking-[0.5px]"
                 customStyle={[gstyles.typefaceBold, gstyles.blueText]}
               />
             </TouchableOpacity>
@@ -226,8 +229,7 @@ const Pricing = ({status, navigate}) => {
           <View className="h-[2px] w-full bg-[#E5E5E5]"></View>
           <FlatList
             data={sizeList}
-            className="p-4"
-            contentContainerStyle={{paddingBottom: 40}}
+            contentContainerStyle={{paddingBottom: 10}}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderSizeList}
             showsVerticalScrollIndicator={false}
@@ -237,11 +239,11 @@ const Pricing = ({status, navigate}) => {
 
       <CustomBottomSheet visible={bottomSheetLocationFilter}>
         <View className="bg-white h-[85%] absolute left-0 right-0 bottom-0 rounded-t-[16px]">
-          <View className="p-4">
+          <View className="p-4 pb-2">
             <View className="flex-row items-center justify-between">
               <TextView
                 content="Kota/kabupaten"
-                customClass="text-[16px]"
+                customClass="text-[16px] leading-6 tracking-[0.5px]"
                 customStyle={gstyles.typefaceBold}
               />
               <TouchableOpacity
@@ -254,20 +256,20 @@ const Pricing = ({status, navigate}) => {
                 }}>
                 <TextView
                   content="Tutup"
+                  customClass='leading-5 tracking-[0.5px]'
                   customStyle={[gstyles.typefaceBold, gstyles.blueText]}
                 />
               </TouchableOpacity>
             </View>
-            <View className="flex-row items-center mt-3">
+            <View className="flex-row items-center mt-2">
               <CustomSearch
                 containerClass="w-full"
-                customClass="py-0"
                 value={searchPhrase}
                 onChangeText={text => setSearchPhrase(text)}
                 submitSearch={() => onSubmitSearch()}
               />
               <TouchableOpacity
-                className="relative right-[20px]"
+                className="relative right-[24px]"
                 onPress={() => {
                   Keyboard.dismiss()
                   setSearchPhrase('')
@@ -278,7 +280,7 @@ const Pricing = ({status, navigate}) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View className="h-[2px] w-full bg-[#E5E5E5]"></View>
+          <View className="h-[1px] w-full bg-[#E5E5E5]"></View>
 
           {searchLoad &&
           listSearchLocation &&
@@ -292,12 +294,12 @@ const Pricing = ({status, navigate}) => {
             listSearchLocation.length !== 0 ? (
             <FlatList
               data={listSearchLocation}
-              className={`p-4 ${
+              className={`${
                 listSearchLocation && listSearchLocation.length == 0
                   ? 'hidden'
                   : 'flex'
               }`}
-              contentContainerStyle={{paddingBottom: 40}}
+              contentContainerStyle={{paddingBottom: 10}}
               keyExtractor={(item, index) => index.toString()}
               renderItem={renderLocationList}
               ListFooterComponent={renderFooter}
@@ -306,12 +308,12 @@ const Pricing = ({status, navigate}) => {
           ) : (
             <FlatList
               data={locationData}
-              className={`p-4 ${
+              className={`${
                 listSearchLocation && listSearchLocation.length == 0
                   ? 'flex'
                   : 'hidden'
               }`}
-              contentContainerStyle={{paddingBottom: 40}}
+              contentContainerStyle={{paddingBottom: 10}}
               keyExtractor={(item, index) => index.toString()}
               renderItem={renderLocationList}
               ListFooterComponent={renderFooter}
@@ -323,7 +325,7 @@ const Pricing = ({status, navigate}) => {
         </View>
       </CustomBottomSheet>
 
-      <View className={`p-4 ${status == 1 ? 'flex' : 'hidden'}`}>
+      <View className={`px-[19px] py-[14px] ${status == 1 ? 'flex' : 'hidden'} bg-white`}>
         {shrimpPriceData.length == 0 ? (
           <View className="justify-center items-center">
             <TextView
@@ -337,12 +339,12 @@ const Pricing = ({status, navigate}) => {
             <View className="justify-center items-center">
               <TextView
                 content="Harga Terbaru"
-                customClass="text-[#004492] text-[18px]"
+                customClass="text-[#004492] text-[18px] leading-6 tracking-[0.5px]"
                 customStyle={gstyles.typefaceBold}
               />
             </View>
             <FlatList
-              className="p-2 pt-0 mt-3"
+              className="mt-2"
               data={shrimpPriceData}
               extraData={sizeValue}
               contentContainerStyle={{paddingBottom: 200}}
@@ -370,18 +372,18 @@ const Pricing = ({status, navigate}) => {
         <View className="flex-row absolute bottom-2 left-3 right-3 z-10">
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => setBottomSheetSizeFilter()}
-            className="bg-[#004492] p-2 shrink rounded-l-[60px] pl-4 py-2 pr-14 flex-row items-center">
+            onPress={() => setBottomSheetSizeFilter(true)}
+            className="bg-[#004492] py-1 pl-[18px] pr-[60px] shrink rounded-l-[60px] flex-row items-center">
             <IconScales />
-            <View className="ml-3">
+            <View className="ml-2">
               <TextView
                 content="Size"
-                customClass="text-[12px]"
+                customClass="text-[12px] leading-4"
                 customStyle={gstyles.whiteText}
               />
               <TextView
                 content={sizeValue}
-                customClass="mt-[1px]"
+                customClass="leading-5 tracking-[0.5px]"
                 customStyle={[gstyles.whiteText, gstyles.typefaceBold]}
               />
             </View>
@@ -393,7 +395,7 @@ const Pricing = ({status, navigate}) => {
               setSearchPhrase('')
               setListSearchLocation([])
             }}
-            className="bg-[#1B77DF] flex-row items-center grow rounded-r-[60px] pl-5">
+            className="bg-[#1B77DF] w-[58%] flex-row items-center grow rounded-r-[60px] py-1 pl-[18px] pr-8">
             <IconLocation />
             <TextView
               content={`${
@@ -401,7 +403,7 @@ const Pricing = ({status, navigate}) => {
                   ? 'Indonesia'
                   : formatText(selectedLocation.name)
               }`}
-              customClass="text-[16px] ml-3 w-[58%]"
+              customClass="text-[16px] ml-2 leading-[6] tracking-[0.5px]"
               customStyle={[gstyles.whiteText, gstyles.typefaceBold]}
               ellipsis="tail"
               lines={1}

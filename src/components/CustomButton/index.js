@@ -28,7 +28,7 @@ const CustomButton = ({
       <TextView
         customClass={`${
           outline ? 'text-[#F63E7C]' : 'text-white'
-        }  text-[16px] ${customClass}`}
+        }  text-[14px] ${customClass}`}
         customStyle={customStyle ? customStyle : gstyles.typefaceBold}
         content={text}
       />

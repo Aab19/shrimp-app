@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {StyleSheet, TextInput, View, Platform} from 'react-native'
+import {StyleSheet, TextInput, View} from 'react-native'
 import {theme} from '../../utils/styles'
 import {IconSearch} from '../../assets/img/icons'
 
@@ -19,9 +19,9 @@ const CustomSearch = ({
       <View
         className={`relative ${customClass}`}
         style={
-          clicked ? styles.searchBar__clicked : styles.searchBar__unclicked
+          clicked ? styles.searchBarClicked : styles.searchBarUnclicked
         }>
-        <IconSearch style={{marginLeft: 1}} />
+        <IconSearch style={{position: 'relative', left: 12}} />
         <TextInput
           style={styles.input}
           placeholder="Cari"
@@ -49,30 +49,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  searchBar__unclicked: {
-    paddingVertical: Platform.OS == 'ios' ? 16 : 4,
-    paddingHorizontal: Platform.OS == 'ios' ? 12 : 12,
+  searchBarUnclicked: {
     flexDirection: 'row',
     backgroundColor: '#F5F6F7',
-    borderRadius: 8,
+    borderRadius: 4,
     borderWidth: 2,
+    width: '90%',
     borderColor: '#E5E5E5',
     alignItems: 'center',
   },
-  searchBar__clicked: {
-    paddingVertical: Platform.OS == 'ios' ? 16 : 4,
-    paddingHorizontal: Platform.OS == 'ios' ? 12 : 12,
+  searchBarClicked: {
     flexDirection: 'row',
     backgroundColor: '#F5F6F7',
-    borderRadius: 8,
+    borderRadius: 4,
     borderWidth: 2,
+    width: '90%',
     borderColor: '#1B77DF',
     alignItems: 'center',
   },
   input: {
-    fontSize: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    fontSize: 16,
+    lineHeight: 20,
     marginLeft: 10,
-    width: '80%',
+    width: '88%',
     color: theme.textColorPrimary,
   },
 })

@@ -44,7 +44,7 @@ const Home = ({navigation: {navigate}}) => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white relative">
+    <SafeAreaView className="flex-1 bg-[#F1F5F9] relative">
       <Navbar title={status.name} />
       <View className="flex-row justify-center self-center">
         {listTab.map((e, index) => {
@@ -62,7 +62,7 @@ const Home = ({navigation: {navigate}}) => {
                   status.id === e.status.id
                     ? 'text-[#1B77DF]'
                     : 'text-[#737373]'
-                } text-[16px]`}
+                } leading-5 tracking-[0.5px]`}
                 content={e.status.name}
               />
             </TouchableOpacity>
@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width / 3,
     flexDirection: 'row',
     justifyContent: 'center',
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
     backgroundColor: theme.white,
     borderBottomWidth: 4,
     borderBottomColor: '#F6F6F6',

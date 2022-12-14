@@ -5,32 +5,37 @@ import {gstyles} from '../../utils'
 import {changeDateFormat} from '../../utils/utils'
 import {IconShareGrey} from '../../assets/img/icons'
 
-const CardNews = ({data, modalWebView, shareVia, news, disease}) => {
+const CardNews = ({idx, data, modalWebView, shareVia, news, disease}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
       onPress={modalWebView}
-      className="border bg-white border-[#E5E5E5] rounded-[4px] mt-2">
-      <Image
-        className="w-full h-[160px] rounded-t-[4px]"
-        source={{
-          uri: `https://app.jala.tech/storage/${data.image}`,
-        }}
-      />
-      <View className="p-3">
+      className={`${idx && 'mt-3'}`}>
+        <View className="w-full border border-[#E5E5E5] rounded-t-lg shadow-[0_4px_8px_-0_rgba(0,0,0,0.02)]">
+          <Image
+          className="w-full h-[160px] rounded-t"
+          source={{
+            uri: data.image ?  `https://app.jala.tech/storage/${data.image}` : `https://app.jala.tech/storage/users/default.png`,
+          }}
+        />
+        
+      </View>
+      <View className="px-3 py-2 border border-[#E5E5E5] border-t-0 rounded-b-lg">
         <TextView
           content={news ? data.title : data.full_name}
-          customClass="text-[18px]"
+          customClass="text-[18px] leading-6 tracking-[0.7px]"
           customStyle={gstyles.typefaceBlack}
         />
         <TextView
           content={news ? data.excerpt : data.meta_description}
           customClass="text-[#737373] mt-1 leading-5"
+          ellipsis='tail'
+          lines={2}
         />
-        <View className="flex-row justify-between items-center mt-3">
+        <View className="flex-row justify-between items-center mt-2">
           <TextView
             content={changeDateFormat(data.created_at)}
-            customClass="text-[#737373]"
+            customClass="text-[#737373] leading-5"
           />
           <TouchableOpacity onPress={shareVia}>
             <IconShareGrey />

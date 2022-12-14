@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import WebView from 'react-native-webview'
 import {useDispatch, useSelector} from 'react-redux'
-import {IconArrowBack} from '../../assets/img/icons'
+import {IconArrowBack, IconShare} from '../../assets/img/icons'
 import CardNews from '../../components/CardNews'
 import TextView from '../../components/TextView'
 import {getNews} from '../../store/news/action'
@@ -65,6 +65,8 @@ const News = ({status, active}) => {
   const renderNews = ({item, index}) => {
     return (
       <CardNews
+        key={index}
+        idx={index}
         data={item}
         news={status == 2 ? true : false}
         disease={status == 3 ? true : false}
@@ -137,27 +139,34 @@ const News = ({status, active}) => {
         animationType="slide"
         transparent={true}
         visible={modalWebView.show}>
-        <View className="w-full h-full relative z-20 bg-[#dae0e7]">
-          <View className="p-4 bg-[#1B77DF]">
-            <TouchableOpacity
-              className="flex-row items-center"
-              onPress={() =>
-                setModalWebView({
-                  show: false,
-                  id: '',
-                })
-              }>
-              <IconArrowBack />
-              <TextView
-                content="Back"
-                customClass="text-white ml-3 text-[16px]"
-                customStyle={gstyles.typefaceBold}
-              />
-            </TouchableOpacity>
+        <View className="w-full h-full relative z-20 bg-[#F1F5F9]">
+          <View className="p-4 bg-[#1B77DF] flex-row justify-between items-center">
+            <View>
+              <TouchableOpacity
+                className="flex-row items-center"
+                onPress={() =>
+                  setModalWebView({ 
+                    show: false,
+                    id: '',
+                  })
+                }>
+                <IconArrowBack />
+                <TextView
+                  content={status == 2 ? 'Kabar Udang' : 'Info Penyakit'}
+                  customClass="text-white ml-3 text-[16px]"
+                  customStyle={gstyles.typefaceBold}
+                />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity onPress={() => shareVia(modalWebView.id)}>
+                <IconShare />
+              </TouchableOpacity>
+            </View>
           </View>
-
+          
           <WebView
-            className="m-4"
+            className="mx-3 mt-4"
             source={{
               uri: `${
                 status == 2
@@ -171,14 +180,14 @@ const News = ({status, active}) => {
         </View>
       </Modal>
 
-      <View className={`p-4 ${active ? 'flex' : 'hidden'}`}>
+      <View className={`p-4 ${active ? 'flex' : 'hidden'} bg-white`}>
         <TextView
           content={`${status == 2 ? 'Kabar Terbaru' : 'Daftar Penyakit'} `}
-          customClass="text-[#004492] text-[18px] mb-3"
+          customClass="text-[#004492] text-[18px] leading-6 tracking-[0.5px] ml-1"
           customStyle={gstyles.typefaceBold}
         />
         <FlatList
-          className={`${status == 2 ? 'flex' : 'hidden'}`}
+          className={`${status == 2 ? 'flex' : 'hidden'} mt-[15px]`}
           data={data}
           contentContainerStyle={{paddingBottom: 160}}
           keyExtractor={(item, index) => index.toString()}
@@ -191,7 +200,7 @@ const News = ({status, active}) => {
         />
 
         <FlatList
-          className={`${status == 3 ? 'flex' : 'hidden'}`}
+          className={`${status == 3 ? 'flex' : 'hidden'} mt-[15px]`}
           data={dataDisease}
           contentContainerStyle={{paddingBottom: 140}}
           keyExtractor={(item, index) => index.toString()}

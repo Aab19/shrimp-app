@@ -16,7 +16,7 @@ const Navbar = ({title, back, share, navigate, shareVia}) => {
 
         <TextView
           content={title}
-          customClass="text-white text-[18px] ml-4"
+          customClass={`text-white text-[18px] ${back && 'ml-4'} `}
           customStyle={gstyles.typefaceBold}
         />
       </View>

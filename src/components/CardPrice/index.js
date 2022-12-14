@@ -13,9 +13,9 @@ const CardPrice = props => {
   let regencyName = formatText(region.name)
 
   return (
-    <View className="p-3 border border-[#E5E5E5] rounded-[4px] mt-2">
+    <View className={`p-3 border border-[#E5E5E5] rounded-[4px] ${props.idx !== 0 && 'mt-2'}`}>
       <View className="flex-row justify-between">
-        <View className="flex-row items-center">
+        <View className="flex-row  items-center">
           <Image
             className="rounded-full"
             style={{
@@ -31,19 +31,19 @@ const CardPrice = props => {
           <View className="ml-2">
             <TextView
               content="Supplier"
-              customClass="text-[12px]"
+              customClass="text-[12px] leading-4 tracking-[0.3px]"
               customStyle={gstyles.blueText}
             />
             <TextView
               content={creator && creator.name}
-              customClass="mt-[2px]"
+              customClass="leading-5"
             />
           </View>
         </View>
         <View
           className={`flex-row items-center ${
-            creator && creator.buyer == null ? 'bg-[#E5E5E5]' : 'bg-[#FFF8E7]'
-          }  rounded-[28px] px-1 h-[22px]`}>
+            creator && creator.buyer == null ? 'bg-[#E5E5E5] px-2 py-1 ' : 'bg-[#FFF8E7] p-1'
+          }  rounded-[28px]  h-[22px]`}>
           {creator && creator.buyer != null && <IconStar />}
           <TextView
             content={`${
@@ -51,7 +51,7 @@ const CardPrice = props => {
                 ? 'Belum terverifikasi'
                 : 'Terverifikasi'
             } `}
-            customClass="ml-1 text-[12px] h-[16px] leading-[16px]"
+            customClass="ml-1 text-[12px] h-[16px] leading-4 tracking-[0.3px]"
           />
         </View>
       </View>
@@ -59,13 +59,13 @@ const CardPrice = props => {
       <View>
         <TextView
           content={resultDate}
-          customClass="text-[12px] mt-[10px]"
+          customClass="text-[12px] mt-[10px] leading-4 tracking-[0.3px]"
           customStyle={gstyles.blueText}
         />
-        <TextView content={provinceName} customClass="text-[12px] mt-[10px]" />
+        <TextView content={provinceName} customClass="text-[12px] mt-1 leading-4" />
         <TextView
           content={regencyName}
-          customClass="text-[18px] mt-1"
+          customClass="text-[18px] leading-6 tracking-[0.5px]"
           customStyle={gstyles.typefaceBold}
         />
       </View>
@@ -74,19 +74,21 @@ const CardPrice = props => {
         <View>
           <TextView
             content={`size ${props.size}`}
-            customClass="text-[12px]"
+            customClass="text-[12px] leading-4 tracking-[0.3px]"
             customStyle={gstyles.blueText}
           />
           <TextView
             content={`${currency_id} ${toCurrencyFormat(
               props.data[props.price],
             )}`}
-            customClass="text-[22px] mt-[2px]"
+            customClass="text-[22px] mt-[2px] leading-7 tracking-[1px]"
             customStyle={gstyles.typefaceBlack}
           />
         </View>
         <View>
           <CustomButton
+            containerClass="px-4 py-[6px]"
+            customClass='leading-5 tracking-[0.5px]'
             text="LIHAT DETAIL"
             onPress={() =>
               props.navigate({
