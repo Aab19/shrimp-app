@@ -68,8 +68,7 @@ const News = ({status, active}) => {
         key={index}
         idx={index}
         data={item}
-        news={status == 2 ? true : false}
-        disease={status == 3 ? true : false}
+        news={item.title ? true : false}
         shareVia={() => shareVia(item.id)}
         modalWebView={() =>
           setModalWebView({

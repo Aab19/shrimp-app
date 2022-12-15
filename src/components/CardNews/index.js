@@ -5,7 +5,7 @@ import {gstyles} from '../../utils'
 import {changeDateFormat} from '../../utils/utils'
 import {IconShareGrey} from '../../assets/img/icons'
 
-const CardNews = ({idx, data, modalWebView, shareVia, news, disease}) => {
+const CardNews = ({idx, data, modalWebView, shareVia, news}) => {
   let date = data.created_at.split(" ")[0]
   return (
     <TouchableOpacity
