@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {Fragment, useCallback, useEffect, useState} from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -97,7 +97,12 @@ const Pricing = ({status, navigate}) => {
     }
   }, [doneLoadContent, doneLoadLocation, doneLoadSearchLocation])
 
-  const renderCardShrimpPrice = ({item, index}) => {
+  const sizeList = [
+    20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180,
+    190, 200,
+  ]
+
+  const renderCardShrimpPrice = useCallback(({item, index}) => {
     return (
       <CardPrice
         key={index}
@@ -108,13 +113,9 @@ const Pricing = ({status, navigate}) => {
         price={`size_${sizeValue}`}
       />
     )
-  }
-  const sizeList = [
-    20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180,
-    190, 200,
-  ]
+  }, []) 
 
-  const renderSizeList = ({item, index}) => {
+  const renderSizeList = useCallback(({item, index}) => {
     return (
       <TouchableOpacity
       className="px-4 py-3"
@@ -128,9 +129,9 @@ const Pricing = ({status, navigate}) => {
         />
       </TouchableOpacity>
     )
-  }
+  }, []) 
 
-  const renderLocationList = ({item, index}) => {
+  const renderLocationList = useCallback(({item, index}) => {
     return (
       <TouchableOpacity
         className="px-4 py-3 leading-5"
@@ -142,7 +143,9 @@ const Pricing = ({status, navigate}) => {
         />
       </TouchableOpacity>
     )
-  }
+  }, []) 
+
+  const keyExtractor = useCallback((item, index) => index.toString(), [])
 
   const onSelectedLocation = item => {
     setSelectedLocation({
@@ -230,7 +233,7 @@ const Pricing = ({status, navigate}) => {
           <FlatList
             data={sizeList}
             contentContainerStyle={{paddingBottom: 10}}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={keyExtractor}
             renderItem={renderSizeList}
             showsVerticalScrollIndicator={false}
           />
@@ -300,7 +303,7 @@ const Pricing = ({status, navigate}) => {
                   : 'flex'
               }`}
               contentContainerStyle={{paddingBottom: 10}}
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={keyExtractor}
               renderItem={renderLocationList}
               ListFooterComponent={renderFooter}
               showsVerticalScrollIndicator={false}
@@ -314,7 +317,7 @@ const Pricing = ({status, navigate}) => {
                   : 'hidden'
               }`}
               contentContainerStyle={{paddingBottom: 10}}
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={keyExtractor}
               renderItem={renderLocationList}
               ListFooterComponent={renderFooter}
               onEndReached={handleOnEndReached}
@@ -348,7 +351,7 @@ const Pricing = ({status, navigate}) => {
               data={shrimpPriceData}
               extraData={sizeValue}
               contentContainerStyle={{paddingBottom: 200}}
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={keyExtractor}
               renderItem={renderCardShrimpPrice}
               ListFooterComponent={renderFooter}
               showsVerticalScrollIndicator={false}

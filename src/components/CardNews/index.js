@@ -6,6 +6,7 @@ import {changeDateFormat} from '../../utils/utils'
 import {IconShareGrey} from '../../assets/img/icons'
 
 const CardNews = ({idx, data, modalWebView, shareVia, news, disease}) => {
+  let date = data.created_at.split(" ")[0]
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -34,7 +35,7 @@ const CardNews = ({idx, data, modalWebView, shareVia, news, disease}) => {
         />
         <View className="flex-row justify-between items-center mt-2">
           <TextView
-            content={changeDateFormat(data.created_at)}
+            content={changeDateFormat(date)}
             customClass="text-[#737373] leading-5"
           />
           <TouchableOpacity onPress={shareVia}>

@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {Fragment, useCallback, useEffect, useState} from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -62,7 +62,7 @@ const News = ({status, active}) => {
     }
   }, [doneLoadNews, doneLoadNewsDisease])
 
-  const renderNews = ({item, index}) => {
+  const renderNews = useCallback(({item, index}) => {
     return (
       <CardNews
         key={index}
@@ -79,7 +79,9 @@ const News = ({status, active}) => {
         }
       />
     )
-  }
+  }, [])  
+    
+  const keyExtractor = useCallback((item, index) => index.toString(), [])
 
   const renderFooter = () => {
     return (
@@ -190,7 +192,7 @@ const News = ({status, active}) => {
           className={`${status == 2 ? 'flex' : 'hidden'} mt-[15px]`}
           data={data}
           contentContainerStyle={{paddingBottom: 160}}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={keyExtractor}
           renderItem={renderNews}
           ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
@@ -203,7 +205,7 @@ const News = ({status, active}) => {
           className={`${status == 3 ? 'flex' : 'hidden'} mt-[15px]`}
           data={dataDisease}
           contentContainerStyle={{paddingBottom: 140}}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={keyExtractor}
           renderItem={renderNews}
           ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
