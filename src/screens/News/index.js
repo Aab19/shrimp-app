@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useEffect, useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -62,7 +62,7 @@ const News = ({status, active}) => {
     }
   }, [doneLoadNews, doneLoadNewsDisease])
 
-  const renderNews = useCallback(({item, index}) => {
+  const renderNews = ({item, index}) => {
     return (
       <CardNews
         key={index}
@@ -78,9 +78,9 @@ const News = ({status, active}) => {
         }
       />
     )
-  }, [])  
+  } 
     
-  const keyExtractor = useCallback((item, index) => index.toString(), [])
+  const keyExtractor = (item, index) => index.toString()
 
   const renderFooter = () => {
     return (

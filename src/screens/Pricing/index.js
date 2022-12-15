@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useEffect, useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {
   ActivityIndicator,
   FlatList,
@@ -102,7 +102,7 @@ const Pricing = ({status, navigate}) => {
     190, 200,
   ]
 
-  const renderCardShrimpPrice = useCallback(({item, index}) => {
+  const renderCardShrimpPrice = ({item, index}) => {
     return (
       <CardPrice
         key={index}
@@ -113,9 +113,9 @@ const Pricing = ({status, navigate}) => {
         price={`size_${sizeValue}`}
       />
     )
-  }, []) 
+  }
 
-  const renderSizeList = useCallback(({item, index}) => {
+  const renderSizeList = ({item, index}) => {
     return (
       <TouchableOpacity
       className="px-4 py-3"
@@ -129,9 +129,9 @@ const Pricing = ({status, navigate}) => {
         />
       </TouchableOpacity>
     )
-  }, []) 
+  } 
 
-  const renderLocationList = useCallback(({item, index}) => {
+  const renderLocationList = ({item, index}) => {
     return (
       <TouchableOpacity
         className="px-4 py-3 leading-5"
@@ -143,9 +143,9 @@ const Pricing = ({status, navigate}) => {
         />
       </TouchableOpacity>
     )
-  }, []) 
+  }
 
-  const keyExtractor = useCallback((item, index) => index.toString(), [])
+  const keyExtractor = (item, index) => index.toString()
 
   const onSelectedLocation = item => {
     setSelectedLocation({
