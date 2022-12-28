@@ -1,7 +1,7 @@
+import {FlashList} from '@shopify/flash-list'
 import React, {Fragment, useEffect, useState} from 'react'
 import {
   ActivityIndicator,
-  FlatList,
   Keyboard,
   RefreshControl,
   TouchableOpacity,
@@ -118,18 +118,15 @@ const Pricing = ({status, navigate}) => {
   const renderSizeList = ({item, index}) => {
     return (
       <TouchableOpacity
-      className="px-4 py-3"
+        className="px-4 py-3"
         onPress={() => {
           setSizeValue(item)
           setBottomSheetSizeFilter(false)
         }}>
-        <TextView
-          content={item}
-          customClass='leading-5'
-        />
+        <TextView content={item} customClass="leading-5" />
       </TouchableOpacity>
     )
-  } 
+  }
 
   const renderLocationList = ({item, index}) => {
     return (
@@ -138,9 +135,7 @@ const Pricing = ({status, navigate}) => {
         onPress={() => {
           onSelectedLocation(item)
         }}>
-        <TextView
-          content={formatText(item.full_name)}
-        />
+        <TextView content={formatText(item.full_name)} />
       </TouchableOpacity>
     )
   }
@@ -230,13 +225,23 @@ const Pricing = ({status, navigate}) => {
             </TouchableOpacity>
           </View>
           <View className="h-[2px] w-full bg-[#E5E5E5]"></View>
-          <FlatList
+          <View className="flex-1">
+            <FlashList
+              data={sizeList}
+              estimatedItemSize={100}
+              contentContainerStyle={{paddingBottom: 10}}
+              keyExtractor={keyExtractor}
+              renderItem={renderSizeList}
+              showsVerticalScrollIndicator={false}
+            />
+            {/* <FlatList
             data={sizeList}
             contentContainerStyle={{paddingBottom: 10}}
             keyExtractor={keyExtractor}
             renderItem={renderSizeList}
             showsVerticalScrollIndicator={false}
-          />
+          /> */}
+          </View>
         </View>
       </CustomBottomSheet>
 
@@ -259,7 +264,7 @@ const Pricing = ({status, navigate}) => {
                 }}>
                 <TextView
                   content="Tutup"
-                  customClass='leading-5 tracking-[0.5px]'
+                  customClass="leading-5 tracking-[0.5px]"
                   customStyle={[gstyles.typefaceBold, gstyles.blueText]}
                 />
               </TouchableOpacity>
@@ -295,40 +300,77 @@ const Pricing = ({status, navigate}) => {
           ) : !searchLoad &&
             listSearchLocation &&
             listSearchLocation.length !== 0 ? (
-            <FlatList
-              data={listSearchLocation}
-              className={`${
-                listSearchLocation && listSearchLocation.length == 0
-                  ? 'hidden'
-                  : 'flex'
-              }`}
-              contentContainerStyle={{paddingBottom: 10}}
-              keyExtractor={keyExtractor}
-              renderItem={renderLocationList}
-              ListFooterComponent={renderFooter}
-              showsVerticalScrollIndicator={false}
-            />
+            <View className="flex-1">
+              <FlashList
+                data={listSearchLocation}
+                estimatedItemSize={100}
+                className={`${
+                  listSearchLocation && listSearchLocation.length == 0
+                    ? 'hidden'
+                    : 'flex'
+                }`}
+                contentContainerStyle={{paddingBottom: 10}}
+                keyExtractor={keyExtractor}
+                renderItem={renderLocationList}
+                ListFooterComponent={renderFooter}
+                showsVerticalScrollIndicator={false}
+              />
+              {/* <FlatList
+                  data={listSearchLocation}
+                  className={`${
+                    listSearchLocation && listSearchLocation.length == 0
+                      ? 'hidden'
+                      : 'flex'
+                  }`}
+                  contentContainerStyle={{paddingBottom: 10}}
+                  keyExtractor={keyExtractor}
+                  renderItem={renderLocationList}
+                  ListFooterComponent={renderFooter}
+                  showsVerticalScrollIndicator={false}
+                /> */}
+            </View>
           ) : (
-            <FlatList
-              data={locationData}
-              className={`${
-                listSearchLocation && listSearchLocation.length == 0
-                  ? 'flex'
-                  : 'hidden'
-              }`}
-              contentContainerStyle={{paddingBottom: 10}}
-              keyExtractor={keyExtractor}
-              renderItem={renderLocationList}
-              ListFooterComponent={renderFooter}
-              onEndReached={handleOnEndReached}
-              onEndReachedThreshold={0.5}
-              showsVerticalScrollIndicator={false}
-            />
+            <View className="flex-1">
+              <FlashList
+                data={locationData}
+                estimatedItemSize={100}
+                className={`${
+                  listSearchLocation && listSearchLocation.length == 0
+                    ? 'flex'
+                    : 'hidden'
+                }`}
+                contentContainerStyle={{paddingBottom: 10}}
+                keyExtractor={keyExtractor}
+                renderItem={renderLocationList}
+                ListFooterComponent={renderFooter}
+                onEndReached={handleOnEndReached}
+                onEndReachedThreshold={0.5}
+                showsVerticalScrollIndicator={false}
+              />
+              {/* <FlatList
+                data={locationData}
+                className={`${
+                  listSearchLocation && listSearchLocation.length == 0
+                    ? 'flex'
+                    : 'hidden'
+                }`}
+                contentContainerStyle={{paddingBottom: 10}}
+                keyExtractor={keyExtractor}
+                renderItem={renderLocationList}
+                ListFooterComponent={renderFooter}
+                onEndReached={handleOnEndReached}
+                onEndReachedThreshold={0.5}
+                showsVerticalScrollIndicator={false}
+              /> */}
+            </View>
           )}
         </View>
       </CustomBottomSheet>
 
-      <View className={`px-[19px] py-[14px] ${status == 1 ? 'flex' : 'hidden'} bg-white`}>
+      <View
+        className={`px-[19px] py-[14px] ${
+          status == 1 ? 'flex' : 'hidden'
+        } bg-white`}>
         {shrimpPriceData.length == 0 ? (
           <View className="justify-center items-center">
             <TextView
@@ -346,7 +388,30 @@ const Pricing = ({status, navigate}) => {
                 customStyle={gstyles.typefaceBold}
               />
             </View>
-            <FlatList
+            <View className="w-full h-full mt-2">
+              <FlashList
+                data={shrimpPriceData}
+                renderItem={renderCardShrimpPrice}
+                estimatedItemSize={100}
+                extraData={sizeValue}
+                contentContainerStyle={{paddingBottom: 220}}
+                keyExtractor={keyExtractor}
+                ListFooterComponent={renderFooter}
+                showsVerticalScrollIndicator={false}
+                onEndReached={handleOnEndReached}
+                onEndReachedThreshold={0.5}
+                maxToRenderPerBatch={10}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshPriceData}
+                    onRefresh={onRefreshProduct}
+                    colors={[theme.statusBarColor]}
+                    tintColor={theme.statusBarColor}
+                  />
+                }
+              />
+            </View>
+            {/* <FlatList
               className="mt-2"
               data={shrimpPriceData}
               extraData={sizeValue}
@@ -366,7 +431,7 @@ const Pricing = ({status, navigate}) => {
                   tintColor={theme.statusBarColor}
                 />
               }
-            />
+            /> */}
           </Fragment>
         )}
       </View>

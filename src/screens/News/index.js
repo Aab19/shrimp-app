@@ -1,7 +1,7 @@
+import {FlashList} from '@shopify/flash-list'
 import React, {Fragment, useEffect, useState} from 'react'
 import {
   ActivityIndicator,
-  FlatList,
   Modal,
   Share,
   TouchableOpacity,
@@ -78,8 +78,8 @@ const News = ({status, active}) => {
         }
       />
     )
-  } 
-    
+  }
+
   const keyExtractor = (item, index) => index.toString()
 
   const renderFooter = () => {
@@ -96,17 +96,22 @@ const News = ({status, active}) => {
   }
 
   const handleOnEndReached = () => {
-    if (status == 2 && data && newsPage < newsData.meta.last_page) {
-      setPageLoading(true)
-      setNewsPage(newsPage + 1)
+    if (newsData) {
+      if (status == 2 && data && newsPage < newsData.meta.last_page) {
+        setPageLoading(true)
+        setNewsPage(newsPage + 1)
+      }
     }
-    if (
-      status == 3 &&
-      dataDisease &&
-      newsDiseasePage < newsDataDisease.meta.last_page
-    ) {
-      setPageLoadingDisease(true)
-      setNewsDiseasePage(newsDiseasePage + 1)
+
+    if (newsDataDisease) {
+      if (
+        status == 3 &&
+        dataDisease &&
+        newsDiseasePage < newsDataDisease.meta.last_page
+      ) {
+        setPageLoadingDisease(true)
+        setNewsDiseasePage(newsDiseasePage + 1)
+      }
     }
   }
 
@@ -146,7 +151,7 @@ const News = ({status, active}) => {
               <TouchableOpacity
                 className="flex-row items-center"
                 onPress={() =>
-                  setModalWebView({ 
+                  setModalWebView({
                     show: false,
                     id: '',
                   })
@@ -165,7 +170,7 @@ const News = ({status, active}) => {
               </TouchableOpacity>
             </View>
           </View>
-          
+
           <WebView
             className="mx-3 mt-4"
             source={{
@@ -187,7 +192,24 @@ const News = ({status, active}) => {
           customClass="text-[#004492] text-[18px] leading-6 tracking-[0.5px] ml-1"
           customStyle={gstyles.typefaceBold}
         />
-        <FlatList
+        <View
+          className={`w-full h-full ${
+            status == 2 ? 'flex' : 'hidden'
+          } mt-[15px]`}>
+          <FlashList
+            data={data}
+            estimatedItemSize={100}
+            contentContainerStyle={{paddingBottom: 180}}
+            keyExtractor={keyExtractor}
+            renderItem={renderNews}
+            ListFooterComponent={renderFooter}
+            showsVerticalScrollIndicator={false}
+            onEndReached={handleOnEndReached}
+            onEndReachedThreshold={0.5}
+            maxToRenderPerBatch={10}
+          />
+
+          {/* <FlatList
           className={`${status == 2 ? 'flex' : 'hidden'} mt-[15px]`}
           data={data}
           contentContainerStyle={{paddingBottom: 160}}
@@ -198,9 +220,26 @@ const News = ({status, active}) => {
           onEndReached={handleOnEndReached}
           onEndReachedThreshold={0.5}
           maxToRenderPerBatch={10}
-        />
+        /> */}
+        </View>
+        <View
+          className={`w-full h-full ${
+            status == 3 ? 'flex' : 'hidden'
+          } mt-[15px]`}>
+          <FlashList
+            data={dataDisease}
+            estimatedItemSize={100}
+            contentContainerStyle={{paddingBottom: 190}}
+            keyExtractor={keyExtractor}
+            renderItem={renderNews}
+            ListFooterComponent={renderFooter}
+            showsVerticalScrollIndicator={false}
+            onEndReached={handleOnEndReached}
+            onEndReachedThreshold={0.5}
+            maxToRenderPerBatch={10}
+          />
 
-        <FlatList
+          {/* <FlatList
           className={`${status == 3 ? 'flex' : 'hidden'} mt-[15px]`}
           data={dataDisease}
           contentContainerStyle={{paddingBottom: 140}}
@@ -211,7 +250,8 @@ const News = ({status, active}) => {
           onEndReached={handleOnEndReached}
           onEndReachedThreshold={0.5}
           maxToRenderPerBatch={10}
-        />
+        /> */}
+        </View>
       </View>
     </Fragment>
   )

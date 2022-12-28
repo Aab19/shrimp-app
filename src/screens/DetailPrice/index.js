@@ -1,5 +1,6 @@
+import {FlashList} from '@shopify/flash-list'
 import React, {Fragment, useEffect, useState} from 'react'
-import {FlatList, Image, Linking, SafeAreaView, Share, View} from 'react-native'
+import {Image, Linking, SafeAreaView, Share, View} from 'react-native'
 import {IconStar} from '../../assets/img/icons'
 import CustomButton from '../../components/CustomButton'
 import Navbar from '../../components/Navbar'
@@ -82,7 +83,7 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
           </View>
           <CustomButton
             containerClass="px-4 py-[6px]"
-            customClass='leading-5 tracking-[0.5px]'
+            customClass="leading-5 tracking-[0.5px]"
             text="Hubungi"
             onPress={() => Linking.openURL(`tel:${item.creator.phone}`)}
           />
@@ -93,14 +94,24 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
             customClass="text-[16px] leading-6 tracking-[0.5px]"
             customStyle={gstyles.typefaceBold}
           />
-          <FlatList
+          <View className="flex-1 mt-3">
+            <FlashList
+              data={sizeList}
+              estimatedItemSize={100}
+              initialNumToRender={sizeList.length}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderListPrice}
+              showsVerticalScrollIndicator={false}
+            />
+            {/* <FlatList
             data={sizeList}
             initialNumToRender={sizeList.length}
             className="mt-3"
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderListPrice}
             showsVerticalScrollIndicator={false}
-          />
+          /> */}
+          </View>
         </View>
         <View className="mt-4">
           <TextView
@@ -174,14 +185,24 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
               customStyle={gstyles.typefaceBold}
             />
           </View>
-          <FlatList
+          <View className="flex-1 px-4 py-2 bg-white mt-1">
+            <FlashList
+              data={[detail]}
+              estimatedItemSize={100}
+              contentContainerStyle={{paddingBottom: 24}}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderDetail}
+              showsVerticalScrollIndicator={false}
+            />
+            {/* <FlatList
             data={[detail]}
             className="px-4 py-2 bg-white mt-1 h-full"
             contentContainerStyle={{paddingBottom: 24}}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderDetail}
             showsVerticalScrollIndicator={false}
-          />
+          /> */}
+          </View>
         </Fragment>
       )}
     </SafeAreaView>
