@@ -1,5 +1,4 @@
 import axios from 'axios'
-// import {API_HEADERS_TOKEN, API_TIMEOUT} from '../utils'
 
 const API_TIMEOUT = 120000
 const API_HEADERS_TOKEN = {
