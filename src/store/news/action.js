@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {API_HEADERS_TOKEN, API_TIMEOUT, URL_API} from '../../utils'
+import APICALL from '../../api'
 import {
   dispatchError,
   dispatchLoading,
@@ -9,7 +8,7 @@ import {
 export const GET_NEWS = 'GET_NEWS'
 
 export const getNews = (page, type, reset = false) => {
-  return dispatch => {
+  return async dispatch => {
     dispatchLoading(dispatch, GET_NEWS)
 
     let endpoint = ''
@@ -19,24 +18,20 @@ export const getNews = (page, type, reset = false) => {
       endpoint = `/diseases?per_page=15&page=${page}`
     }
 
-    axios
-      .get(
-        URL_API + endpoint,
-        {headers: API_HEADERS_TOKEN},
-        {timeout: API_TIMEOUT},
-      )
-      .then(response => {
-        if (response.status == 200) {
-          let result = {
-            res: response.data,
-            type: type,
-            reset: reset,
-          }
-          dispatchSuccess(dispatch, GET_NEWS, result)
+    try {
+      const response = await APICALL(endpoint, {
+        method: 'GET',
+      })
+      if (response.status == 200) {
+        let result = {
+          res: response.data,
+          type: type,
+          reset: reset,
         }
-      })
-      .catch(error => {
-        dispatchError(dispatch, GET_NEWS, error.message)
-      })
+        return dispatchSuccess(dispatch, GET_NEWS, result)
+      }
+    } catch (error) {
+      return dispatchError(dispatch, GET_NEWS, error.message)
+    }
   }
 }

@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {API_HEADERS_TOKEN, API_TIMEOUT, URL_API} from '../../utils/constant'
+import APICALL from '../../api'
 import {
   dispatchError,
   dispatchSuccess,
@@ -12,75 +11,70 @@ export const GET_SEARCH_LOCATION = 'GET_SEARCH_LOCATION'
 export const RESET_SEARCH_LOCATION = 'RESET_SEARCH_LOCATION'
 
 export const getShrimpPrice = (page, id, filter = false) => {
-  return dispatch => {
+  return async dispatch => {
     dispatchLoading(dispatch, GET_SHRIMP_PRICE)
 
-    axios
-      .get(
-        URL_API +
-          `/shrimp_prices?per_page=15&page=${page}&with=region,creator&region_id=${id}`,
-        {headers: API_HEADERS_TOKEN},
-        {timeout: API_TIMEOUT},
+    try {
+      const response = await APICALL(
+        `/shrimp_prices?per_page=15&page=${page}&with=region,creator&region_id=${id}`,
+        {
+          method: 'GET',
+        },
       )
-      .then(response => {
-        if (response.status == 200) {
-          let result = {
-            res: response.data,
-            filter: filter,
-          }
-          dispatchSuccess(dispatch, GET_SHRIMP_PRICE, result)
+      if (response.status == 200) {
+        let result = {
+          res: response.data,
+          filter: filter,
         }
-      })
-      .catch(error => {
-        dispatchError(dispatch, GET_SHRIMP_PRICE, error.message)
-      })
+        return dispatchSuccess(dispatch, GET_SHRIMP_PRICE, result)
+      }
+    } catch (error) {
+      return dispatchError(dispatch, GET_SHRIMP_PRICE, error.message)
+    }
   }
 }
 
 export const getLocation = (page, load = false) => {
-  return dispatch => {
+  return async dispatch => {
     dispatchLoading(dispatch, GET_LOCATION)
 
-    axios
-      .get(
-        URL_API + `/regions?per_page=15&page=${page}&has=shrimp_prices&search=`,
-        {headers: API_HEADERS_TOKEN},
-        {timeout: API_TIMEOUT},
+    try {
+      const response = await APICALL(
+        `/regions?per_page=15&page=${page}&has=shrimp_prices&search=`,
+        {
+          method: 'GET',
+        },
       )
-      .then(response => {
-        if ((response.status = 200)) {
-          let result = {
-            res: response.data,
-            load: load,
-          }
-          dispatchSuccess(dispatch, GET_LOCATION, result)
+      if ((response.status = 200)) {
+        let result = {
+          res: response.data,
+          load: load,
         }
-      })
-      .catch(error => {
-        dispatchError(dispatch, GET_LOCATION, error.message)
-      })
+        return dispatchSuccess(dispatch, GET_LOCATION, result)
+      }
+    } catch (error) {
+      return dispatchError(dispatch, GET_LOCATION, error.message)
+    }
   }
 }
 
 export const getSearchLocation = search => {
-  return dispatch => {
+  return async dispatch => {
     dispatchLoading(dispatch, GET_SEARCH_LOCATION)
 
-    axios
-      .get(
-        URL_API +
-          `/regions?&has=shrimp_prices&search=${search == '' ? null : search}`,
-        {headers: API_HEADERS_TOKEN},
-        {timeout: API_TIMEOUT},
+    try {
+      const response = await APICALL(
+        `/regions?&has=shrimp_prices&search=${search == '' ? null : search}`,
+        {
+          method: 'GET',
+        },
       )
-      .then(response => {
-        if ((response.status = 200)) {
-          dispatchSuccess(dispatch, GET_SEARCH_LOCATION, response.data)
-        }
-      })
-      .catch(error => {
-        dispatchError(dispatch, GET_SEARCH_LOCATION, error.message)
-      })
+      if ((response.status = 200)) {
+        return dispatchSuccess(dispatch, GET_SEARCH_LOCATION, response.data)
+      }
+    } catch (error) {
+      return dispatchError(dispatch, GET_SEARCH_LOCATION, error.message)
+    }
   }
 }
 

@@ -6,20 +6,21 @@ import {changeDateFormat} from '../../utils/utils'
 import {IconShareGrey} from '../../assets/img/icons'
 
 const CardNews = ({idx, data, modalWebView, shareVia, news}) => {
-  let date = data.created_at.split(" ")[0]
+  let date = data.created_at.split(' ')[0]
   return (
     <TouchableOpacity
       activeOpacity={0.9}
       onPress={modalWebView}
       className={`${idx && 'mt-3'}`}>
-        <View className="w-full border border-[#E5E5E5] rounded-t-lg shadow-[0_4px_8px_-0_rgba(0,0,0,0.02)]">
-          <Image
+      <View className="w-full border border-[#E5E5E5] rounded-t-lg shadow-[0_4px_8px_-0_rgba(0,0,0,0.02)]">
+        <Image
           className="w-full h-[160px] rounded-t"
           source={{
-            uri: data.image ?  `https://app.jala.tech/storage/${data.image}` : `https://app.jala.tech/storage/users/default.png`,
+            uri: data.image
+              ? `https://app.jala.tech/storage/${data.image}`
+              : `https://app.jala.tech/storage/users/default.png`,
           }}
         />
-        
       </View>
       <View className="px-3 py-2 border border-[#E5E5E5] border-t-0 rounded-b-lg">
         <TextView
@@ -30,7 +31,7 @@ const CardNews = ({idx, data, modalWebView, shareVia, news}) => {
         <TextView
           content={news ? data.excerpt : data.meta_description}
           customClass="text-[#737373] mt-1 leading-5"
-          ellipsis='tail'
+          ellipsis="tail"
           lines={2}
         />
         <View className="flex-row justify-between items-center mt-2">

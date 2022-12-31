@@ -63,9 +63,13 @@ export const gstyles = StyleSheet.create({
     color: theme.buttonColorPrimary,
   },
   boxShadow: {
-    elevation: 8,
-    shadowColor: 'rgba(0, 0, 0, 0.2)',
-    shadowOffset: {width: -2, height: 4},
-    shadowRadius: 3,
+    shadowColor: '#000',
+    elevation: 0.4,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 4,
+    // },
+    // shadowOpacity: 0.04,
+    // shadowRadius: 8,
   },
 })
