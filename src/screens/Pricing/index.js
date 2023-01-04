@@ -1,5 +1,5 @@
 import {FlashList} from '@shopify/flash-list'
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   ActivityIndicator,
   Keyboard,
@@ -207,7 +207,7 @@ const Pricing = ({status, navigate}) => {
   }
 
   return (
-    <Fragment>
+    <>
       <CustomBottomSheet visible={bottomSheetSizeFilter}>
         <View className="bg-white h-[93%] absolute left-0 right-0 bottom-0 rounded-t-[16px]">
           <View className="flex-row justify-between items-center p-4">
@@ -380,7 +380,7 @@ const Pricing = ({status, navigate}) => {
             />
           </View>
         ) : (
-          <Fragment>
+          <>
             <View className="justify-center items-center">
               <TextView
                 content="Harga Terbaru"
@@ -432,7 +432,7 @@ const Pricing = ({status, navigate}) => {
                 />
               }
             /> */}
-          </Fragment>
+          </>
         )}
       </View>
 
@@ -479,7 +479,7 @@ const Pricing = ({status, navigate}) => {
           </TouchableOpacity>
         </View>
       )}
-    </Fragment>
+    </>
   )
 }
 

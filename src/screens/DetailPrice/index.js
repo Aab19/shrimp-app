@@ -1,5 +1,5 @@
 import {FlashList} from '@shopify/flash-list'
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Image, Linking, SafeAreaView, Share, View} from 'react-native'
 import {IconStar} from '../../assets/img/icons'
 import CustomButton from '../../components/CustomButton'
@@ -23,7 +23,7 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
 
   const renderDetail = ({item, index}) => {
     return (
-      <Fragment>
+      <>
         <View className="flex-row justify-between items-center">
           <TextView
             content={changeDateFormat(item.date)}
@@ -124,7 +124,7 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
             customClass="mt-1 leading-5"
           />
         </View>
-      </Fragment>
+      </>
     )
   }
 
@@ -172,7 +172,7 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
         shareVia={shareVia}
       />
       {detail && (
-        <Fragment>
+        <>
           <View className="p-3 bg-white">
             <TextView
               content={formatText(detail.region.province_name)}
@@ -203,7 +203,7 @@ const DetailPrice = ({navigation: {goBack}, route}) => {
             showsVerticalScrollIndicator={false}
           /> */}
           </View>
-        </Fragment>
+        </>
       )}
     </SafeAreaView>
   )

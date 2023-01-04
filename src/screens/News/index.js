@@ -1,5 +1,5 @@
 import {FlashList} from '@shopify/flash-list'
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   ActivityIndicator,
   Modal,
@@ -84,14 +84,14 @@ const News = ({status, active}) => {
 
   const renderFooter = () => {
     return (
-      <Fragment>
+      <>
         <View
           className={`mt-3 ${
             pageLoading || pageLoadingDisease ? 'flex' : 'hidden'
           }`}>
           <ActivityIndicator color={theme.statusBarColor} />
         </View>
-      </Fragment>
+      </>
     )
   }
 
@@ -139,7 +139,7 @@ const News = ({status, active}) => {
   }
 
   return (
-    <Fragment>
+    <>
       <Modal
         className="relative"
         animationType="slide"
@@ -253,7 +253,7 @@ const News = ({status, active}) => {
         /> */}
         </View>
       </View>
-    </Fragment>
+    </>
   )
 }
 
